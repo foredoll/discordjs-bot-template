@@ -25,6 +25,12 @@ client.on('message', message => {
 	if (command.guildOnly && message.channel.type === 'dm') {
 	return message.reply('This command can be only executed in a server!');
 }
+	 if (command.permissions) {
+  const authorPerms = message.channel.permissionsFor(message.author);
+   if (!authorPerms || !authorPerms.has(command.permissions)) {
+       return message.reply('You can not do this!');
+   }
+ }
 
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
