@@ -1,36 +1,17 @@
-const Discord = require("discord.js");
-const client = new Discord.Client({
-  disableMentions: 'everyone',
-});
-const fs = require("fs");
-const db = require('quick.db')
+const Discord = require('discord.js');
+const client = new Discord.Client();
 
-client.commands = new Discord.Collection();
+const prefix = ">"
 
-client.config = {
-  prefix: process.env.PREFIX,
-  token: process.env.TOKEN
-};
-
-fs.readdir(__dirname + "/events/", (err, files) => {
-  if (err) return console.error(err);
-  files.forEach(file => {
-    const event = require(__dirname + `/events/${file}`);
-    let eventName = file.split(".")[0];
-    client.on(eventName, event.bind(null, client));
-    console.log("Loading Event: " + eventName);
-  });
+client.once('ready', () => {
+	console.log('Ready!');
 });
 
-fs.readdir("./commands/", (err, files) => {
-  if (err) return console.error(err);
-  files.forEach(file => {
-    if (!file.endsWith(".js")) return;
-    let props = require(`./commands/${file}`);
-    let commandName = file.split(".")[0];
-    client.commands.set(commandName, props);
-    console.log("Loading Command: " + commandName);
-  });
+client.on('message', message => {
+	if (!message.content.startsWith(prefix) || message.author.bot) return;
+
+	const args = message.content.slice(prefix.length).trim().split(/ +/);
+	const command = args.shift().toLowerCase();
 });
 
-client.login(client.config.token);
+client.login(process.env.token);
