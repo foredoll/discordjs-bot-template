@@ -32,25 +32,6 @@ fs.readdir('./commands/', (err, files) => {
   });
 });
 
-client.modules = new Discord.Collection();
-fs.readdir('./modules/', (err, modules) => {
-  if (err) console.error(err); 
-  log(`Loading a total of ${modules.length} modules.`);
-  modules.forEach(m => {
-    let loadData = require(`./modules/${m}`); 
-    log(`Loading Module: ${loadData.moduledata.name}..`);
-    client.modules.set(loadData.moduledata.name, loadData);
-  });
-});
-
-fs.readdir('./events/', (err, events) => {
-  if (err) console.error(err); 
-  log(`Loading a total of ${events.length} events.`);
-  events.forEach(e => {
-    let loadData = require(`./events/${e}`);
-  });
-});
-
 client.reload = command => { 
   return new Promise((resolve, reject) => {
     try { 
