@@ -1,4 +1,4 @@
-const { prefix } = require('../../config.json');
+const db =require('quick.db')
 
 module.exports = {
 	name: 'help',
@@ -9,6 +9,8 @@ module.exports = {
 	execute(message, args) {
 		const data = [];
 		const { commands } = message.client;
+                const prefix = db.fetch(`prefix_${message.guild.id}`)
+                if(prefix === null) prefix = "."
 
 		if (!args.length) {
 			data.push('Here\'s a list of all my commands:');
