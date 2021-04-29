@@ -1,3 +1,5 @@
+const { ownerID } = require('../config.json')
+
 module.exports = (client, message) => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
 
@@ -15,7 +17,7 @@ module.exports = (client, message) => {
   if (command.guildOnly && message.channel.type === "dm")
     return message.reply("This command can only be executed inside a server!");
 
-  if (command.ownerOnly && message.author.id != process.env.OWNERID)
+  if (command.ownerOnly && message.author.id != ownerID)
     return message.reply("Only the bot owner can use this command!");
 
   if (command.permissions) {
