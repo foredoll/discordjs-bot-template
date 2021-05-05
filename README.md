@@ -1,3 +1,3 @@
 ### discordjs-bot-template
 
-As the name suggests, this is just a Discord.js bot template with a command & event handler. Nothing special here.
+So that I don't have to copy from [the discord guide](https://discordjs.guide) every time.
